@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mongiz/features/splash/presentation/widgets/splash_view_body.dart';
-import 'dart:async'; // نحتاج هذه المكتبة لاستخدام Future.delayed
+import 'dart:async';
+
+import 'package:mongiz/features/splash/presentation/widgets/splash_view_body.dart'; // نحتاج هذه المكتبة لاستخدام Future.delayed
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -10,31 +11,27 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-  // لا نحتاج لـ Timer object، فقط نستخدم Future.delayed
-  // مع فحص mounted لضمان عدم حدوث أخطاء بعد الـ dispose
-
   @override
   void initState() {
     super.initState();
-    _navigateToHome();
+    _navigateToNextScreen();
   }
 
   // دالة خاصة لعمل التأخير والانتقال
-  void _navigateToHome() {
+  void _navigateToNextScreen() {
     // الانتقال بعد 5 ثواني تأخير
     Future.delayed(const Duration(seconds: 5), () {
       // نتأكد أن الـ Widget مازال موجود في الـ Widget Tree قبل الانتقال
       if (mounted) {
-        // الانتقال للشاشة الرئيسية (MainScreen) وحذف الـ Splash View من المكدس
-        Navigator.of(context).pushReplacementNamed('/main');
+        // الانتقال لـ ChoiceView
+        Navigator.of(context).pushReplacementNamed('/choiceView');
       }
     });
   }
 
   @override
   void dispose() {
-    // بما أننا استخدمنا Future.delayed وليس Timer، فلا نحتاج لعمل
-    // cancel() هنا، ولكن تركها كـ dispose فارغة هي الممارسة الافتراضية.
+    // بما أننا استخدمنا Future.delayed وليس Timer، فلا نحتاج لعمل dispose محدد.
     super.dispose();
   }
 
