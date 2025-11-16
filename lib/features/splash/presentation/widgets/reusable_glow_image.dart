@@ -24,26 +24,23 @@ class ReusableGlowImage extends StatefulWidget {
 
 class _ReusableGlowImageState extends State<ReusableGlowImage>
     with SingleTickerProviderStateMixin {
-  
   late AnimationController _controller;
   late Animation<double> _glowAnimation;
 
   @override
   void initState() {
     super.initState();
-    
+
     _controller = AnimationController(
       duration: widget.duration, // بنستخدم المدة اللي تحدديها
       vsync: this,
     )..repeat(reverse: true); // يتكرر للأبد ويعكس الحركة
 
     // الـ Tween هيبدأ من 0.5 وينتهي عند القيمة اللي تحدديها للـ maxGlowIntensity
-    _glowAnimation = Tween<double>(begin: 0.5, end: widget.maxGlowIntensity).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut,
-      ),
-    );
+    _glowAnimation = Tween<double>(
+      begin: 0.5,
+      end: widget.maxGlowIntensity,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -56,15 +53,15 @@ class _ReusableGlowImageState extends State<ReusableGlowImage>
         builder: (context, child) {
           // قيمة الوميض الحالية
           final glowValue = _glowAnimation.value;
-          
+
           return ColorFiltered(
             // ColorFilter.matrix هو اللي بيعمل تأثير الإضاءة (Brightness)
             colorFilter: ColorFilter.matrix(<double>[
               // R  G  B  A  Const
-              glowValue, 0, 0, 0, 0,  // Red channel
-              0, glowValue, 0, 0, 0,  // Green channel
-              0, 0, glowValue, 0, 0,  // Blue channel
-              0, 0, 0, 1, 0,        // Alpha channel
+              glowValue, 0, 0, 0, 0, // Red channel
+              0, glowValue, 0, 0, 0, // Green channel
+              0, 0, glowValue, 0, 0, // Blue channel
+              0, 0, 0, 1, 0, // Alpha channel
             ]),
             child: Image.asset(
               widget.imagePath, // مسار الصورة هيتغير حسب اللي بتمرريه
