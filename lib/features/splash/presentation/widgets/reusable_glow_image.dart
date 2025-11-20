@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ReusableGlowImage extends StatefulWidget {
   // 1. مسار الصورة المطلوب عمل تأثير الإضاءة عليها
   final String imagePath;
-  // 2. حجم الـ Widget (الجوهرة أو غيرها)
+  // 2. حجم الـ Widget (الجوهرة أو غيرها) - القيمة دي هي اللي هتتحكمي فيها من بره
   final double size;
   // 3. مدة دورة الوميض الكاملة
   final Duration duration;
@@ -13,7 +13,8 @@ class ReusableGlowImage extends StatefulWidget {
   const ReusableGlowImage({
     super.key,
     required this.imagePath,
-    this.size = 80.0, // قيمة افتراضية مناسبة للجوهرة
+    this.size =
+        80.0, // قيمة افتراضية مناسبة للجوهرة، ويمكن تغييرها عند الاستدعاء
     this.duration = const Duration(seconds: 2), // قيمة افتراضية
     this.maxGlowIntensity = 1.0, // قيمة افتراضية (إضاءة كاملة)
   });
@@ -45,6 +46,7 @@ class _ReusableGlowImageState extends State<ReusableGlowImage>
 
   @override
   Widget build(BuildContext context) {
+    // 💡 الـ SizedBox بيستخدم الـ widget.size اللي بتمرريه كـ width و height
     return SizedBox(
       width: widget.size,
       height: widget.size,
@@ -57,7 +59,7 @@ class _ReusableGlowImageState extends State<ReusableGlowImage>
           return ColorFiltered(
             // ColorFilter.matrix هو اللي بيعمل تأثير الإضاءة (Brightness)
             colorFilter: ColorFilter.matrix(<double>[
-              // R  G  B  A  Const
+              // R  G  B  A  Const
               glowValue, 0, 0, 0, 0, // Red channel
               0, glowValue, 0, 0, 0, // Green channel
               0, 0, glowValue, 0, 0, // Blue channel
@@ -66,6 +68,7 @@ class _ReusableGlowImageState extends State<ReusableGlowImage>
             child: Image.asset(
               widget.imagePath, // مسار الصورة هيتغير حسب اللي بتمرريه
               fit: BoxFit.contain,
+              // مش محتاجين نحدد width و height هنا لأن الـ SizedBox عمل ده
             ),
           );
         },

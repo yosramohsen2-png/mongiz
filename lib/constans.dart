@@ -15,3 +15,4 @@ const List<Color> kButtomGradientColors = [
   Color(0xFF501794),
   Color(0xFF3E70A1),
 ];
+const List<Color> kBackgroundChoice = [Color(0xFF18367B), Color(0xFF7548CF)];
