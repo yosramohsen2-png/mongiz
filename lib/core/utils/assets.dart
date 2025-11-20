@@ -7,4 +7,5 @@ class AssetsData {
   static const String diamondSmall = 'assets/images/diamond,small.png';
   static const String diamondbg = 'assets/images/glitter bg.png';
   static const String cloud = 'assets/images/cloud.png';
+  static const String bronze = 'assets/images/bronze.png';
 }
