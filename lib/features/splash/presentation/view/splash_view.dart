@@ -5,7 +5,7 @@ import 'package:mongiz/features/splash/presentation/widgets/splash_view_body.dar
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
-
+  static const String routeName = 'splashView';
   @override
   State<SplashView> createState() => _SplashViewState();
 }

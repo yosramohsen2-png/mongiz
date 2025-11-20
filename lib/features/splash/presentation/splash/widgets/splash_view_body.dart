@@ -4,7 +4,7 @@ import 'package:mongiz/features/splash/presentation/widgets/reusable_glow_image.
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
-
+  static const String routeName = 'splashViewBody';
   @override
   State<SplashViewBody> createState() => _SplashViewBodyState();
 }

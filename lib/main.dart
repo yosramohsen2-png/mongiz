@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 // تأكدي من استيراد كل الثوابت
 import 'package:mongiz/constans.dart';
+import 'package:mongiz/core/helper_functions/on_generate_routes.dart';
 import 'package:mongiz/features/choice/views/choice_view.dart';
 import 'package:mongiz/features/splash/presentation/view/splash_view.dart';
 // استيراد شاشة الـ Onboarding
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Mongiz());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Mongiz extends StatelessWidget {
+  const Mongiz({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +39,8 @@ class MyApp extends StatelessWidget {
             ),
       ),
 
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const SplashView(),
-        '/choiceView': (context) => const ChoiceView(),
-      },
+      onGenerateRoute: onGenerateRoutes,
+      initialRoute: SplashView.routeName,
     );
   }
 }
