@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mongiz/constans.dart';
 import 'package:mongiz/core/utils/assets.dart';
 import 'package:mongiz/features/splash/presentation/widgets/reusable_glow_image.dart';
 
 // تعريف الثوابت
-const List<Color> kBackgroundChoice = [Color(0xFF18367B), Color(0xFF7548CF)];
 
 class BackgroundChoiceView extends StatelessWidget {
-  // 💡 المتغير الجديد لاستقبال المحتوى
   final Widget? content;
 
   const BackgroundChoiceView({super.key, this.content});
@@ -14,16 +13,13 @@ class BackgroundChoiceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    // الجزء السفلي هيبدأ من 35% من ارتفاع الشاشة (تم الحفاظ على القيمة اللي تم تحديدها مؤخراً)
     final containerTop = screenHeight * 35 / 100;
 
     return Stack(
       fit: StackFit.expand,
       children: [
-        // 1. الخلفية الأساسية (صورة تملأ الشاشة)
         Image.asset(AssetsData.backGround, fit: BoxFit.cover),
 
-        // 2. العناصر الثابتة في الجزء العلوي (رائد الفضاء، الجوهرة)
         Positioned(
           top: 200,
           left: 90,
@@ -38,7 +34,6 @@ class BackgroundChoiceView extends StatelessWidget {
           ),
         ),
 
-        // 🎯 3. الكونتينر اللي فيه الجريديانت (القاعدة السفلية)
         Positioned(
           top: containerTop, // يبدأ من النقطة المحددة
           bottom: 0,

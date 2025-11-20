@@ -38,6 +38,7 @@ class CustomButtom extends StatelessWidget {
           style: Styles.textStyle16.copyWith(
             color: Colors.white,
             decoration: TextDecoration.none,
+            fontFamily: 'OmarBold',
           ),
         ),
       ),
