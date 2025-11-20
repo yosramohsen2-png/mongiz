@@ -8,4 +8,6 @@ class AssetsData {
   static const String diamondbg = 'assets/images/glitter bg.png';
   static const String cloud = 'assets/images/cloud.png';
   static const String bronze = 'assets/images/bronze.png';
+
+  static const String logoBig = 'assets/images/logo,big.png';
 }

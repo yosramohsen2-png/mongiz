@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongiz/constans.dart';
+import 'package:mongiz/core/utils/styles.dart';
 
 class CustomButtom extends StatelessWidget {
   final String text;
@@ -13,7 +14,7 @@ class CustomButtom extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 150, // زودت العرض شوية عشان يكون شكله أحسن كزرار رئيسي
+        width: 200, // زودت العرض شوية عشان يكون شكله أحسن كزرار رئيسي
         height: 50,
         alignment: Alignment.center,
         decoration: BoxDecoration(
@@ -34,10 +35,9 @@ class CustomButtom extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: const TextStyle(
+          style: Styles.textStyle16.copyWith(
             color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+            decoration: TextDecoration.none,
           ),
         ),
       ),

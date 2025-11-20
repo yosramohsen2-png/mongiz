@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mongiz/features/choice/views/choice_view.dart';
+import 'package:mongiz/features/signin/views/signin_view.dart';
+import 'package:mongiz/features/signup/views/signup_view.dart';
 import 'package:mongiz/features/splash/presentation/view/splash_view.dart';
 
 Route<dynamic> onGenerateRoutes(RouteSettings settings) {
@@ -9,6 +11,10 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
 
     case SplashView.routeName:
       return MaterialPageRoute(builder: (_) => const SplashView());
+    case SigninView.routeName:
+      return MaterialPageRoute(builder: (_) => const SigninView());
+    case SignupView.routeName:
+      return MaterialPageRoute(builder: (_) => const SignupView());
     default:
       return MaterialPageRoute(
         builder: (_) => Scaffold(
