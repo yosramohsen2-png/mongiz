@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mongiz/features/choice/views/choice_view.dart';
 import 'dart:async';
 
 import 'package:mongiz/features/splash/presentation/widgets/splash_view_body.dart'; // نحتاج هذه المكتبة لاستخدام Future.delayed
@@ -18,10 +19,9 @@ class _SplashViewState extends State<SplashView> {
   }
 
   void _navigateToNextScreen() {
-    Future.delayed(const Duration(seconds: 5), () {
-      if (mounted) {
-        Navigator.of(context).pushReplacementNamed('/choiceView');
-      }
+    Future.delayed(const Duration(seconds: 7), () {
+      if (!mounted) return;
+      Navigator.of(context).pushReplacementNamed(ChoiceView.routeName);
     });
   }
 

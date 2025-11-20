@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 // تأكدي من استيراد كل الثوابت
 import 'package:mongiz/constans.dart';
 import 'package:mongiz/core/helper_functions/on_generate_routes.dart';
-import 'package:mongiz/features/choice/views/choice_view.dart';
 import 'package:mongiz/features/splash/presentation/view/splash_view.dart';
 // استيراد شاشة الـ Onboarding
 
@@ -19,10 +18,8 @@ class Mongiz extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       theme: ThemeData.dark().copyWith(
-        // 1. استخدام اللون الداكن للخلفية (Scaffold)
         scaffoldBackgroundColor: kScaffoldDarkColor,
 
-        // 2. تخصيص الـ ColorScheme باستخدام لون الجريدينت الأساسي
         colorScheme: ColorScheme.fromSeed(
           seedColor: kAppPrimaryColor,
           brightness: Brightness.dark,
@@ -35,7 +32,6 @@ class Mongiz extends StatelessWidget {
               titleLarge: ThemeData.dark().textTheme.titleLarge?.copyWith(
                 fontFamily: 'OmarBold',
               ),
-              // يمكنك تخصيص أي نص آخر هنا
             ),
       ),
 

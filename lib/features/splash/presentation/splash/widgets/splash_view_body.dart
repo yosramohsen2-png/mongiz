@@ -22,6 +22,17 @@ class _SplashViewBodyState extends State<SplashViewBody> {
         });
       }
     });
+
+    // بدء الانتقال إلى الشاشة التالية بعد التأخير
+    _navigateToNextScreen();
+  }
+
+  void _navigateToNextScreen() {
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed('/nextScreen');
+      }
+    });
   }
 
   @override
