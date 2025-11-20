@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // تأكدي من استيراد كل الثوابت
 import 'package:mongiz/constans.dart';
+import 'package:mongiz/features/choice/views/choice_view.dart';
 import 'package:mongiz/features/splash/presentation/view/splash_view.dart';
 // استيراد شاشة الـ Onboarding
 
@@ -37,12 +38,10 @@ class MyApp extends StatelessWidget {
             ),
       ),
 
-      // 4. تحديد المسارات (Routes)
       initialRoute: '/',
       routes: {
         '/': (context) => const SplashView(),
-        // إضافة مسار شاشة الـ Onboarding للانتقال إليها من الـ SplashView
-        '/onboarding': (context) => const SplashView(),
+        '/choiceView': (context) => const ChoiceView(),
       },
     );
   }
