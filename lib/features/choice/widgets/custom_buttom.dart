@@ -10,15 +10,13 @@ class CustomButtom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // بنستخدم GestureDetector عشان نخلي الـ Container قابل للنقر
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 200, // زودت العرض شوية عشان يكون شكله أحسن كزرار رئيسي
+        width: 200,
         height: 50,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          // تطبيق الـ Gradient بالعرض
           gradient: const LinearGradient(
             colors: kButtomGradientColors,
             begin: Alignment.centerLeft,

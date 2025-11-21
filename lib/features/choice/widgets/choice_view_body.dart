@@ -15,6 +15,7 @@ class ChoiceViewBody extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
 
         children: [
+          Image.asset(AssetsData.ahln, height: 100),
           SizedBox(height: 60),
           Image.asset(AssetsData.logoBig, height: 100),
           SizedBox(height: 45),
