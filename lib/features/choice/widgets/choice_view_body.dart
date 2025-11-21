@@ -11,24 +11,33 @@ class ChoiceViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackgroundChoiceView(
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
+      content: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
 
-        children: [
-          Image.asset(AssetsData.ahln, height: 100),
-          SizedBox(height: 60),
-          Image.asset(AssetsData.logoBig, height: 100),
-          SizedBox(height: 45),
-          CustomButtom(
-            text: 'تسجيل الدخول',
-            onTap: () => Navigator.of(context).pushNamed(SigninView.routeName),
-          ),
-          SizedBox(height: 30),
-          CustomButtom(
-            text: 'حساب جديد',
-            onTap: () => Navigator.of(context).pushNamed(SignupView.routeName),
-          ),
-        ],
+          children: [
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [Image.asset(AssetsData.ahln, height: 40)],
+            ),
+            SizedBox(height: 10),
+            Image.asset(AssetsData.logoBig, height: 100),
+            SizedBox(height: 45),
+            CustomButtom(
+              text: 'تسجيل الدخول',
+              onTap: () =>
+                  Navigator.of(context).pushNamed(SigninView.routeName),
+            ),
+            SizedBox(height: 30),
+            CustomButtom(
+              text: 'حساب جديد',
+              onTap: () =>
+                  Navigator.of(context).pushNamed(SignupView.routeName),
+            ),
+          ],
+        ),
       ),
     );
   }
