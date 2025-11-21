@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:mongiz/features/choice/widgets/background_choice_view.dart';
 import 'package:mongiz/features/choice/widgets/custom_buttom.dart';
 import 'package:mongiz/features/home/views/home_view.dart';
-import 'custom_form_text_field.dart';
+import 'package:mongiz/features/signup/widgets/custom_form_text_field.dart';
 
-class SignupViewBody extends StatefulWidget {
-  const SignupViewBody({super.key});
+class SigninViewBody extends StatefulWidget {
+  const SigninViewBody({super.key});
 
   @override
-  State<SignupViewBody> createState() => _SignupViewBodyState();
+  State<SigninViewBody> createState() => _SignupViewBodyState();
 }
 
-class _SignupViewBodyState extends State<SignupViewBody> {
+class _SignupViewBodyState extends State<SigninViewBody> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -40,7 +40,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'تسجيل حساب جديد',
+                        'تسجيل الدخول',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -73,7 +73,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                       ),
                       SizedBox(height: 40),
                       CustomButtom(
-                        text: 'إنشاء حساب',
+                        text: 'تسجيل الدخول',
                         onTap: () => Navigator.pushReplacementNamed(
                           context,
                           HomeView.routeName,
