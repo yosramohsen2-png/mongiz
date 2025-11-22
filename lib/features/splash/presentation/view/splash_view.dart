@@ -19,7 +19,7 @@ class _SplashViewState extends State<SplashView> {
   }
 
   void _navigateToNextScreen() {
-    Future.delayed(const Duration(seconds: 7), () {
+    Future.delayed(const Duration(seconds: 5), () {
       if (!mounted) return;
       Navigator.of(context).pushReplacementNamed(ChoiceView.routeName);
     });
