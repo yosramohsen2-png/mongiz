@@ -84,8 +84,6 @@ class _SigninViewBodyState extends State<SigninViewBody> {
                                     final email = _emailController.text.trim();
                                     final password = _passwordController.text.trim();
 
-                                    debugPrint('Attempting Sign In with: $email');
-
                                     if (email.isEmpty || password.isEmpty) {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(content: Text('الرجاء إدخال البيانات')),
@@ -93,6 +91,7 @@ class _SigninViewBodyState extends State<SigninViewBody> {
                                       return;
                                     }
 
+                                    // Call Firebase Sign In
                                     final success = await authViewModel.signIn(
                                       email,
                                       password,

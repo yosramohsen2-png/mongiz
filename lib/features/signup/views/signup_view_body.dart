@@ -84,8 +84,6 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                                     final email = _emailController.text.trim();
                                     final password = _passwordController.text.trim();
 
-                                    debugPrint('Attempting Sign Up with: $email');
-
                                     if (email.isEmpty || password.isEmpty) {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(content: Text('الرجاء إدخال البيانات')),
@@ -93,6 +91,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                                       return;
                                     }
 
+                                    // Call Firebase Sign Up
                                     final success = await authViewModel.signUp(
                                       email,
                                       password,

@@ -15,26 +15,27 @@ class AuthViewModel extends ChangeNotifier {
   // ------------------------------------
   Future<bool> checkAuthStatus() async {
     final prefs = await SharedPreferences.getInstance();
-    final accessToken = prefs.getString('access_token');
-    final refreshToken = prefs.getString('refresh_token');
-    // Simple check: if tokens exist, we assume logged in.
-    // You could also validate the token expiry here if needed.
-    return accessToken != null && refreshToken != null;
+    final uid = prefs.getString('user_uid');
+    
+    // Verify if Firebase also thinks we are logged in
+    final currentUser = _apiService.getCurrentUser();
+    
+    if (uid != null && currentUser != null) {
+      return true;
+    } else {
+      // If inconsistency, clear prefs
+      await prefs.remove('user_uid');
+      return false;
+    }
   }
 
   // ------------------------------------
-  // Save Tokens
+  // Save Session
   // ------------------------------------
-  Future<void> _saveTokens(Map<String, dynamic> data) async {
+  Future<void> _saveSession(String uid) async {
     final prefs = await SharedPreferences.getInstance();
-
-    if (data.containsKey('accessToken')) {
-      await prefs.setString('access_token', data['accessToken']);
-    }
-    if (data.containsKey('refreshToken')) {
-      await prefs.setString('refresh_token', data['refreshToken']);
-    }
-    debugPrint('Tokens saved successfully!');
+    await prefs.setString('user_uid', uid);
+    debugPrint('User Session Saved: $uid');
   }
 
   // ------------------------------------
@@ -46,23 +47,29 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final responseData = await _apiService.loginUser(
+      final user = await _apiService.loginUser(
         email: email.trim(),
         password: password.trim(),
       );
 
-      await _saveTokens(responseData);
-
-      _isLoading = false;
-      notifyListeners();
-      return true; 
+      if (user != null) {
+        await _saveSession(user.uid);
+        _isLoading = false;
+        notifyListeners();
+        return true;
+      } else {
+        _errorMessage = 'فشل تسجيل الدخول: لم يتم إرجاع مستخدم.';
+        _isLoading = false;
+        notifyListeners();
+        return false;
+      }
     } catch (e) {
       _errorMessage = e.toString().contains('Exception:')
           ? e.toString().replaceFirst('Exception: ', '')
-          : 'حدث خطأ غير متوقع: تأكدي من تشغيل السيرفر والاتصال بالإنترنت.';
+          : 'حدث خطأ غير متوقع.';
       _isLoading = false;
       notifyListeners();
-      return false; 
+      return false;
     }
   }
 
@@ -75,23 +82,29 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final responseData = await _apiService.registerUser(
+      final user = await _apiService.registerUser(
         email: email.trim(),
         password: password.trim(),
       );
 
-      await _saveTokens(responseData);
-
-      _isLoading = false;
-      notifyListeners();
-      return true; 
+      if (user != null) {
+        await _saveSession(user.uid);
+        _isLoading = false;
+        notifyListeners();
+        return true;
+      } else {
+        _errorMessage = 'فشل التسجيل: لم يتم إرجاع مستخدم.';
+        _isLoading = false;
+        notifyListeners();
+        return false;
+      }
     } catch (e) {
       _errorMessage = e.toString().contains('Exception:')
           ? e.toString().replaceFirst('Exception: ', '')
-          : 'حدث خطأ غير متوقع: تأكدي من تشغيل السيرفر والاتصال بالإنترنت.';
+          : 'حدث خطأ غير متوقع.';
       _isLoading = false;
       notifyListeners();
-      return false; 
+      return false;
     }
   }
 
@@ -99,9 +112,9 @@ class AuthViewModel extends ChangeNotifier {
   // Sign Out
   // ------------------------------------
   Future<void> signOut() async {
+    await _apiService.signOut();
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('access_token');
-    await prefs.remove('refresh_token');
+    await prefs.remove('user_uid');
     notifyListeners();
   }
 }

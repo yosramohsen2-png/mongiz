@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "785314745418",
+    "project_id": "mongez-cdfb6",
+    "storage_bucket": "mongez-cdfb6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785314745418:android:f344f9858f11803438eab3",
+        "android_client_info": {
+          "package_name": "com.example.mongez"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMXacIXe7THuWx2cnt38lEX72YkCzcn50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785314745418:android:17447565e5b0dc4738eab3",
+        "android_client_info": {
+          "package_name": "com.example.mongiz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMXacIXe7THuWx2cnt38lEX72YkCzcn50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

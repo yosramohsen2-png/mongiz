@@ -1,62 +1,77 @@
-// import 'dart:convert';
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
-
-// تم التأكيد على استخدام IP المحاكي والـ Port 3000
-const String baseUrl = 'http://10.0.2.2:3000/api/auth';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthApiService {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
   // ------------------------------------
-  // دالة التسجيل (Sign Up)
+  // Sign Up with Firebase
   // ------------------------------------
-  Future<Map<String, dynamic>> registerUser({
+  Future<User?> registerUser({
     required String email,
     required String password,
   }) async {
-    final url = Uri.parse('$baseUrl/register');
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'email': email, 'password': password}),
-    );
-
-    // API Service مسؤول عن فحص الحالة وإخراج بيانات نظيفة
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return jsonDecode(response.body);
-    } else {
-      // إخراج رسالة الخطأ لتظهر للمستخدم بوضوح
-      final errorData = jsonDecode(response.body);
-      throw Exception(
-        errorData['message'] ??
-            'فشل التسجيل. رمز الحالة: ${response.statusCode}',
+    try {
+      final UserCredential credential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
+      return credential.user;
+    } on FirebaseAuthException catch (e) {
+      // Throw a clean error message based on Firebase error codes
+      if (e.code == 'weak-password') {
+        throw Exception('كلمة المرور ضعيفة جداً.');
+      } else if (e.code == 'email-already-in-use') {
+        throw Exception('البريد الإلكتروني مسجل بالفعل.');
+      } else if (e.code == 'invalid-email') {
+        throw Exception('البريد الإلكتروني غير صالح.');
+      } else {
+        throw Exception(e.message ?? 'حدث خطأ أثناء التسجيل.');
+      }
+    } catch (e) {
+      throw Exception('حدث خطأ غير متوقع: $e');
     }
   }
 
   // ------------------------------------
-  // دالة تسجيل الدخول (Sign In)
+  // Sign In with Firebase
   // ------------------------------------
-  Future<Map<String, dynamic>> loginUser({
+  Future<User?> loginUser({
     required String email,
     required String password,
   }) async {
-    final url = Uri.parse('$baseUrl/login');
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'email': email, 'password': password}),
-    );
-
-    // API Service مسؤول عن فحص الحالة وإخراج بيانات نظيفة
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      final errorData = jsonDecode(response.body);
-      throw Exception(
-        errorData['message'] ??
-            'فشل تسجيل الدخول. رمز الحالة: ${response.statusCode}',
+    try {
+      final UserCredential credential = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
       );
+      return credential.user;
+    } on FirebaseAuthException catch (e) {
+      // Throw a clean error message
+      if (e.code == 'user-not-found') {
+        throw Exception('لا يوجد حساب بهذا البريد الإلكتروني.');
+      } else if (e.code == 'wrong-password') {
+        throw Exception('كلمة المرور غير صحيحة.');
+      } else if (e.code == 'invalid-credential') {
+        throw Exception('بيانات الدخول غير صحيحة.');
+      } else {
+        throw Exception(e.message ?? 'حدث خطأ أثناء تسجيل الدخول.');
+      }
+    } catch (e) {
+      throw Exception('حدث خطأ غير متوقع: $e');
     }
+  }
+
+  // ------------------------------------
+  // Sign Out
+  // ------------------------------------
+  Future<void> signOut() async {
+    await _firebaseAuth.signOut();
+  }
+  
+  // ------------------------------------
+  // Get Current User
+  // ------------------------------------
+  User? getCurrentUser() {
+    return _firebaseAuth.currentUser;
   }
 }
