@@ -11,4 +11,6 @@ class AssetsData {
   static const String ahln = 'assets/images/ahln.png';
   static const String logoBig = 'assets/images/logo,big.png';
   static const String logoSmall = 'assets/images/logo.png';
+
+  static const String notee = 'assets/images/notee.png';
 }

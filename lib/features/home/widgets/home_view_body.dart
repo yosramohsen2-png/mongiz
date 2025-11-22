@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mongiz/core/utils/assets.dart';
 import 'package:mongiz/features/home/widgets/custom_app_bar.dart';
+import 'package:mongiz/features/home/widgets/custom_home_container.dart';
+import 'package:mongiz/features/note/presentation/views/note_view.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
@@ -22,6 +24,13 @@ class HomeViewBody extends StatelessWidget {
               CustomAppBar(
                 centerWidget: Image.asset(AssetsData.logoSmall),
                 showIcon: false,
+              ),
+              const SizedBox(height: 50),
+              CustomHomeContainer(
+                title: 'نوت منجز',
+                iconPath: AssetsData.notee,
+                onTap: () =>
+                    Navigator.of(context).pushNamed(NoteView.routeName),
               ),
             ],
           ),
