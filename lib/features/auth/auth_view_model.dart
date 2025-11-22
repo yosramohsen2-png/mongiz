@@ -1,79 +1,107 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../core/data/auth_api_service.dart';
+import 'package:mongiz/core/data/auth_api_service.dart';
 
 class AuthViewModel extends ChangeNotifier {
   final AuthApiService _apiService = AuthApiService();
-
   bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
   String? _errorMessage;
+
+  bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
-  Future<bool> signUp(String email, String password) async {
-    _setLoading(true);
-    _errorMessage = null;
-    notifyListeners();
-
-    try {
-      final response = await _apiService.registerUser(email: email, password: password);
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final data = jsonDecode(response.body);
-        await _saveTokens(data);
-        _setLoading(false);
-        return true;
-      } else {
-        _errorMessage = 'Sign Up Failed: ${response.body}';
-        _setLoading(false);
-        return false;
-      }
-    } catch (e) {
-      _errorMessage = 'An error occurred: $e';
-      _setLoading(false);
-      return false;
-    }
+  // ------------------------------------
+  // Check Auth Status (Startup)
+  // ------------------------------------
+  Future<bool> checkAuthStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final refreshToken = prefs.getString('refresh_token');
+    // Simple check: if tokens exist, we assume logged in.
+    // You could also validate the token expiry here if needed.
+    return accessToken != null && refreshToken != null;
   }
 
-  Future<bool> signIn(String email, String password) async {
-    _setLoading(true);
-    _errorMessage = null;
-    notifyListeners();
-
-    try {
-      final response = await _apiService.loginUser(email: email, password: password);
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        await _saveTokens(data);
-        _setLoading(false);
-        return true;
-      } else {
-        _errorMessage = 'Sign In Failed: ${response.body}';
-        _setLoading(false);
-        return false;
-      }
-    } catch (e) {
-      _errorMessage = 'An error occurred: $e';
-      _setLoading(false);
-      return false;
-    }
-  }
-
+  // ------------------------------------
+  // Save Tokens
+  // ------------------------------------
   Future<void> _saveTokens(Map<String, dynamic> data) async {
     final prefs = await SharedPreferences.getInstance();
+
     if (data.containsKey('accessToken')) {
-      await prefs.setString('accessToken', data['accessToken']);
+      await prefs.setString('access_token', data['accessToken']);
     }
     if (data.containsKey('refreshToken')) {
-      await prefs.setString('refreshToken', data['refreshToken']);
+      await prefs.setString('refresh_token', data['refreshToken']);
+    }
+    debugPrint('Tokens saved successfully!');
+  }
+
+  // ------------------------------------
+  // Sign In
+  // ------------------------------------
+  Future<bool> signIn(String email, String password) async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      final responseData = await _apiService.loginUser(
+        email: email.trim(),
+        password: password.trim(),
+      );
+
+      await _saveTokens(responseData);
+
+      _isLoading = false;
+      notifyListeners();
+      return true; 
+    } catch (e) {
+      _errorMessage = e.toString().contains('Exception:')
+          ? e.toString().replaceFirst('Exception: ', '')
+          : 'حدث خطأ غير متوقع: تأكدي من تشغيل السيرفر والاتصال بالإنترنت.';
+      _isLoading = false;
+      notifyListeners();
+      return false; 
     }
   }
 
-  void _setLoading(bool value) {
-    _isLoading = value;
+  // ------------------------------------
+  // Sign Up
+  // ------------------------------------
+  Future<bool> signUp(String email, String password) async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      final responseData = await _apiService.registerUser(
+        email: email.trim(),
+        password: password.trim(),
+      );
+
+      await _saveTokens(responseData);
+
+      _isLoading = false;
+      notifyListeners();
+      return true; 
+    } catch (e) {
+      _errorMessage = e.toString().contains('Exception:')
+          ? e.toString().replaceFirst('Exception: ', '')
+          : 'حدث خطأ غير متوقع: تأكدي من تشغيل السيرفر والاتصال بالإنترنت.';
+      _isLoading = false;
+      notifyListeners();
+      return false; 
+    }
+  }
+
+  // ------------------------------------
+  // Sign Out
+  // ------------------------------------
+  Future<void> signOut() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('access_token');
+    await prefs.remove('refresh_token');
     notifyListeners();
   }
 }

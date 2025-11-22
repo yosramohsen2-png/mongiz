@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mongiz/features/signin/widgets/signin_view_body.dart';
+import 'signin_view_body.dart';
 
 class SigninView extends StatelessWidget {
   const SigninView({super.key});

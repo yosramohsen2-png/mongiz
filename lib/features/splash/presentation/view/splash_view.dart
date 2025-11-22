@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mongiz/features/auth/auth_view_model.dart';
 import 'package:mongiz/features/choice/views/choice_view.dart';
+import 'package:mongiz/features/home/views/home_view.dart';
 import 'dart:async';
 
-import 'package:mongiz/features/splash/presentation/widgets/splash_view_body.dart'; // نحتاج هذه المكتبة لاستخدام Future.delayed
+import 'package:mongiz/features/splash/presentation/widgets/splash_view_body.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -15,19 +17,25 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-    _navigateToNextScreen();
+    _checkAuthAndNavigate();
   }
 
-  void _navigateToNextScreen() {
-    Future.delayed(const Duration(seconds: 5), () {
-      if (!mounted) return;
+  Future<void> _checkAuthAndNavigate() async {
+    // Ensure splash is visible for at least 3 seconds
+    await Future.delayed(const Duration(seconds: 3));
+
+    if (!mounted) return;
+
+    final authViewModel = AuthViewModel();
+    final isLoggedIn = await authViewModel.checkAuthStatus();
+
+    if (!mounted) return;
+
+    if (isLoggedIn) {
+      Navigator.of(context).pushReplacementNamed(HomeView.routeName);
+    } else {
       Navigator.of(context).pushReplacementNamed(ChoiceView.routeName);
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    }
   }
 
   @override
