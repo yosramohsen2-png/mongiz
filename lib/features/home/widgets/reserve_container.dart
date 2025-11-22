@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mongiz/constans.dart';
+import 'package:mongiz/features/home/widgets/custom_shaking_image.dart';
 import 'package:mongiz/features/home/widgets/shaking_image.dart';
 
 class ReserveContainer extends StatelessWidget {
@@ -63,7 +64,7 @@ class ReserveContainer extends StatelessWidget {
             const SizedBox(width: 20),
             // 2. ظبطنا الصورة
             //
-            ShakingImage(iconPath: iconPath),
+            CustomShakingImage(iconPath: iconPath),
           ],
         ),
       ),

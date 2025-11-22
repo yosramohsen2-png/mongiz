@@ -17,7 +17,6 @@ class AuthApiService {
       );
       return credential.user;
     } on FirebaseAuthException catch (e) {
-      // Throw a clean error message based on Firebase error codes
       if (e.code == 'weak-password') {
         throw Exception('كلمة المرور ضعيفة جداً.');
       } else if (e.code == 'email-already-in-use') {
@@ -46,7 +45,6 @@ class AuthApiService {
       );
       return credential.user;
     } on FirebaseAuthException catch (e) {
-      // Throw a clean error message
       if (e.code == 'user-not-found') {
         throw Exception('لا يوجد حساب بهذا البريد الإلكتروني.');
       } else if (e.code == 'wrong-password') {
