@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mongiz/features/azkark/presentation/views/azkark_view.dart';
+import 'package:mongiz/features/challenge/presentation/views/challenge_view.dart';
 import 'package:mongiz/features/choice/views/choice_view.dart';
 import 'package:mongiz/features/home/views/home_view.dart';
 import 'package:mongiz/features/note/presentation/views/note_view.dart';
@@ -21,6 +23,10 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const HomeView());
     case NoteView.routeName:
       return MaterialPageRoute(builder: (_) => const NoteView());
+    case ChallengeView.routeName:
+      return MaterialPageRoute(builder: (_) => const ChallengeView());
+    case AzkarkView.routeName:
+      return MaterialPageRoute(builder: (_) => const AzkarkView());
     default:
       return MaterialPageRoute(
         builder: (_) => Scaffold(

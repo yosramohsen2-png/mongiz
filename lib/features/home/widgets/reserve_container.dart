@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mongiz/constans.dart';
 import 'package:mongiz/features/home/widgets/shaking_image.dart';
 
-class CustomHomeContainer extends StatelessWidget {
+class ReserveContainer extends StatelessWidget {
   final String title;
   final String iconPath;
   final VoidCallback onTap;
 
-  const CustomHomeContainer({
+  const ReserveContainer({
     super.key,
     required this.title,
     required this.iconPath,
@@ -25,14 +25,14 @@ class CustomHomeContainer extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: kBackgroundChoice,
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
+            begin: Alignment.centerRight,
+            end: Alignment.centerLeft,
           ),
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(50),
-            bottomRight: Radius.circular(50), // خليتها 0 زي تعليقك
-            topRight: Radius.circular(0),
-            bottomLeft: Radius.circular(0),
+            topLeft: Radius.circular(0),
+            bottomRight: Radius.circular(0), // خليتها 0 زي تعليقك
+            topRight: Radius.circular(50),
+            bottomLeft: Radius.circular(50),
           ),
           boxShadow: [
             BoxShadow(
@@ -62,11 +62,7 @@ class CustomHomeContainer extends StatelessWidget {
             ),
             const SizedBox(width: 20),
             // 2. ظبطنا الصورة
-            // ShakingImage(
-            //   iconPath,
-            //   height: 40,
-            //   fit: BoxFit.contain, // يضمن ان الصورة تظهر كاملة
-            // ),
+            //
             ShakingImage(iconPath: iconPath),
           ],
         ),
